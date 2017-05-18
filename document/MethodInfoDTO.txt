@@ -1,0 +1,11 @@
+MethodInfoDTO
+
+OverView
+テストするメソッドの情報とそれを持つクラス名を格納したDTOクラス
+
+Field
+対象クラス名
+MethodInfoList<MethodInfoBean>
+
+Method
+Field Getter/Setter

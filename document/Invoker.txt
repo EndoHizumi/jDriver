@@ -1,0 +1,34 @@
+Invoker
+
+OverView
+テスト対象メソッドを実行するクラス
+
+Paramerter
+execute:テスト対象のクラス名・メソッド情報:MethodInfoDTO
+
+Field
+現在、実行中のメソッド
+対象クラスオブジェクト：obj
+対象メソッドリスト:MethodInfoList<MethodInfoBean>
+
+Method
+
+Sequence
+[Caller] -(new Instance)-> [Invoker]
+[Invoker] -(Initialize)-> [Constractor]
+[Caller] -(execute)-> [Invoker]
+
+Activity
+start
+repeat
+i = 0
+[execute] -> [MethodInfoList[i]]
+[execute] <--(MethodInfoBean)- [MethodInfoList]
+
+if(MethodInfoBean.isParam) then
+true
+	[execute] -> [invokeWithParam]
+	[invokeWithParam] -> 
+false
+	[execute] -> [Invoke]
+end if
