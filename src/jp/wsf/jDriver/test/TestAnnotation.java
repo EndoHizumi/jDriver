@@ -7,7 +7,7 @@ import jp.wsf.jDriver.annotations.Test;
 import jp.wsf.jDriver.core.jDriver;
 
 
-public class TestAnotation {
+public class TestAnnotation {
 	public static void main(String[] args) {
 		jDriver jd = new jDriver();
 		jd.execute();

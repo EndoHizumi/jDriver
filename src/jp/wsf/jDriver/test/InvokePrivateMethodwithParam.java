@@ -5,6 +5,7 @@ import static jp.wsf.jDriver.method.Invoker.*;
 
 import java.lang.reflect.InvocationTargetException;
 
+import jp.wsf.jDriver.annotations.Test;
 import jp.wsf.jDriver.core.jDriver;
 
 public class InvokePrivateMethodwithParam {
@@ -13,6 +14,7 @@ public class InvokePrivateMethodwithParam {
 		jd.execute();
 	}
 
+	@Test
 	public void testSetName() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 		// set Ai's name,age
 		Human Ai = new Human("ai", 16, "Female");
