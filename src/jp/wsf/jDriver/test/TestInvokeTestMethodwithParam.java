@@ -1,20 +1,21 @@
 package jp.wsf.jDriver.test;
 
+import static jp.wsf.jDriver.asserts.AssertResult.*;
+
 import jp.wsf.jDriver.annotations.ParameterSource;
 import jp.wsf.jDriver.annotations.Test;
 import jp.wsf.jDriver.core.jDriver;
-import static jp.wsf.jDriver.asserts.AssertResult.*;
 
 public class TestInvokeTestMethodwithParam {
-	
+
 		public static void main(String[] args) {
 			jDriver jd = new jDriver();
 			jd.execute();
 		}
-	
+
 		@ParameterSource(name = "testTwo-params")
 		public Object testParams() {
-			Object[][] params = { { "hello", " new world","hello new world" }, { "114", "514","114514" }, { "‰ä‚ª¢‚Ì", "t‚ª—ˆ‚½‚Ÿ‚Ÿ‚ ‚ŸII","‰ä‚ª¢‚Ìt‚ª—ˆ‚½‚Ÿ‚Ÿ‚ ‚ŸII" }, };
+			String[][] params = { { "hello", " new world","hello new world" }, { "114", "514","114514" }, { "æˆ‘ãŒä¸–ã®", "æ˜¥ãŒæ¥ãŸããã‚ãï¼ï¼","æˆ‘ãŒä¸–ã®æ˜¥ãŒæ¥ãŸããã‚ãï¼ï¼" }, };
 			return params;
 		}
 
@@ -23,4 +24,5 @@ public class TestInvokeTestMethodwithParam {
 			String actual= a + b;
 			assertResult(except,actual);
 		}
+
 }
