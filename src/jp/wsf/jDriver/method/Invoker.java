@@ -13,12 +13,12 @@ import jp.wsf.jDriver.result.ResultCount;
  *
  */
 public class Invoker {
-	
-	// Œ»İÀs’†‚ÌƒeƒXƒgƒƒ\ƒbƒhî•ñ
+
+	// ç¾åœ¨å®Ÿè¡Œä¸­ã®ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰æƒ…å ±
 	private MethodInfoBean invoke = null;
-	// ƒeƒXƒgƒNƒ‰ƒX
-	private Class obj = null;
-	// ƒeƒXƒgƒNƒ‰ƒX“à‚Ì‘ÎÛƒeƒXƒgƒƒ\ƒbƒhî•ñƒŠƒXƒg
+	// ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹
+	private Class<?> obj = null;
+	// ãƒ†ã‚¹ãƒˆã‚¯ãƒ©ã‚¹å†…ã®å¯¾è±¡ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰æƒ…å ±ãƒªã‚¹ãƒˆ
 	private MethodInfoBean[] MethodInfoList = new MethodInfoBean[0];
 
 	public Invoker(MethodInfoDTO targetMethods) throws ClassNotFoundException, TestExecuteException {
@@ -29,16 +29,16 @@ public class Invoker {
 			throw new TestExecuteException("testClass Not Found.");
 		}
 	}
-	
-	
+
+
 	/**
-	 * ƒeƒXƒgƒƒ\ƒbƒh‚ğÀs‚µ‚Ü‚·B
+	 * ãƒ†ã‚¹ãƒˆãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 	 * @throws Exception
 	 */
 	public void execute()throws Exception{
 		ResultCount.printResult(obj.getName(), "Test start");
 		for(MethodInfoBean item:MethodInfoList){
-			String methodName = item.getMethodName(); 
+			String methodName = item.getMethodName();
 			String paramSourcesName = item.getParamerterSourceName();
 			invoke = item;
 			if( item.isParam()){
@@ -51,9 +51,9 @@ public class Invoker {
 			}
 		}
 	}
-	
+
 	/**
-	 * ˆø”‚Ì‚È‚¢ƒƒ\ƒbƒh‚ğÀs‚µ‚Ü‚·B
+	 * å¼•æ•°ã®ãªã„ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 	 * @param MethodName
 	 * @return
 	 * @throws SecurityException
@@ -61,11 +61,11 @@ public class Invoker {
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
-	 * @throws InstantiationException 
+	 * @throws InstantiationException
 	 */
 	private Object Invoke(String MethodName) throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException, InstantiationException {
 		Object actual = null;
-		Constructor constructer = obj.getDeclaredConstructor();
+		Constructor<?> constructer = obj.getDeclaredConstructor();
 		constructer.setAccessible(true);
 		Object targetClass = constructer.newInstance();
 		Method method = obj.getDeclaredMethod(MethodName);
@@ -74,9 +74,9 @@ public class Invoker {
 		actual = method.invoke(targetClass);
 		return actual;
 	}
-	
+
 	/**
-	 * ˆø”‚ğ‚Âƒƒ\ƒbƒh‚ğÀs‚µ‚Ü‚·B
+	 * å¼•æ•°ã‚’æŒã¤ãƒ¡ã‚½ãƒƒãƒ‰ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚
 	 * @param MethodName
 	 * @param paramSource
 	 * @param params
@@ -86,21 +86,26 @@ public class Invoker {
 	 * @throws InvocationTargetException
 	 * @throws SecurityException
 	 * @throws NoSuchMethodException
-	 * @throws InstantiationException 
+	 * @throws InstantiationException
 	 */
-	private Object InvokeWithParam(String MethodName, String paramSource,Class[] params) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException, InstantiationException {
+	private Object InvokeWithParam(String MethodName, String paramSource,Class<?>[] params) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException, InstantiationException {
 		Object actual = null;
 		Object targetClass = obj.newInstance();
-		Method method = obj.getDeclaredMethod(MethodName,params);
+		Object[][] paramValues =null;
+		Method method = obj.getDeclaredMethod(paramSource);
+		paramValues= (Object[][]) method.invoke(targetClass);
+		method = obj.getDeclaredMethod(MethodName,params);
 		method.setAccessible(true);
 		ResultCount.printResult(method.getName(), "Invoke");
-		actual = method.invoke(targetClass);
+		for (Object[] item:paramValues){
+			actual = method.invoke(targetClass,item);
+		}
 		return actual;
 	}
-	
+
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @return actual
@@ -123,7 +128,7 @@ public class Invoker {
 
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
@@ -150,7 +155,7 @@ public class Invoker {
 
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
@@ -177,7 +182,7 @@ public class Invoker {
 
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
@@ -204,7 +209,7 @@ public class Invoker {
 
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
@@ -231,7 +236,7 @@ public class Invoker {
 
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
@@ -254,10 +259,10 @@ public class Invoker {
 		actual = method.invoke(Target, argsArray);
 		return actual;
 	}
-	
+
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
@@ -281,10 +286,10 @@ public class Invoker {
 		actual = method.invoke(Target, argsArray);
 		return actual;
 	}
-	
+
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
@@ -299,7 +304,7 @@ public class Invoker {
 			Object... args) throws IllegalArgumentException,
 			IllegalAccessException, InvocationTargetException,
 			SecurityException, NoSuchMethodException {
-		
+
 		Object actual = null;
 		Object[] argsArray = args;
 		Class<?> targetClass = Target.getClass();
@@ -308,12 +313,12 @@ public class Invoker {
 		method.setAccessible(true);
 		actual = method.invoke(Target, argsArray);
 		return actual;
-		
+
 	}
-	
+
 	/**
 	 * Invoke method from param[Target].
-	 * 
+	 *
 	 * @param MethodName
 	 * @param Target
 	 * @param args
