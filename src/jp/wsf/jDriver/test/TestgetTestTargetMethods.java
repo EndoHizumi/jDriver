@@ -89,7 +89,7 @@ public class TestgetTestTargetMethods {
 		@ParameterSource(name="testTwo-params")
 		public Object testParams(){
 			Object[][] params = {
-					{"hello"," new world"},{"114","514"},{"‰ä‚ª¢‚Ì","t‚ª—ˆ‚½‚Ÿ‚Ÿ‚ ‚ŸII"},
+					{"hello"," new world"},{"114","514"},{"æˆ‘ãŒä¸–ã®","æ˜¥ãŒæ¥ãŸããã‚ãï¼ï¼"},
 			};
 			return params;
 		}

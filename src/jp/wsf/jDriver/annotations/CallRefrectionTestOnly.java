@@ -1,10 +1,9 @@
 package jp.wsf.jDriver.annotations;
 /**
- * ���t���N�V�����ł�Private���\�b�h�ďo�e�X�g�̂��߂ɗ��p���郁�\�b�h��\���B
+ * リフレクションでのPrivateメソッド呼出テストのために利用するメソッドを表す。
  * @author shunsuke kikuchi
  *
  */
-@SuppressWarnings("unused")
 public @interface CallRefrectionTestOnly {
 
 }

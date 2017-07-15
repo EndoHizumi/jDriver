@@ -5,6 +5,7 @@ import static jp.wsf.jDriver.asserts.AssertResult.*;
 import jp.wsf.jDriver.annotations.ParameterSource;
 import jp.wsf.jDriver.annotations.Test;
 import jp.wsf.jDriver.core.jDriver;
+import jp.wsf.jDriver.result.ResultCount;
 
 public class TestInvokeTestMethodwithParam {
 
@@ -15,7 +16,8 @@ public class TestInvokeTestMethodwithParam {
 
 		@ParameterSource(name = "testTwo-params")
 		public Object testParams() {
-			String[][] params = { { "hello", " new world","hello new world" }, { "114", "514","114514" }, { "我が世の", "春が来たぁぁあぁ！！","我が世の春が来たぁぁあぁ！！" }, };
+			String[][] params = { { "hello", " new world","hello new world" }, { "114", "514","114514" }, { "我が世の", "春が来たぁぁあぁ！！",
+				"我が世の春が来たぁぁあぁ！！" }, };
 			return params;
 		}
 
@@ -23,6 +25,8 @@ public class TestInvokeTestMethodwithParam {
 		public void testTwo(String a, String b,String except) {
 			String actual= a + b;
 			assertResult(except,actual);
+			ResultCount.print(except,"expect");
+			ResultCount.print(a + " + " + b + " = " + actual,"actual");
 		}
 
 }

@@ -53,7 +53,7 @@ public class Invoker {
 	}
 
 	/**
-	 * 引数のないメソッドを実行します。
+	 * 
 	 * @param MethodName
 	 * @return
 	 * @throws SecurityException

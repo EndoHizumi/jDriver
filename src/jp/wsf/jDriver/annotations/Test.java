@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Test {
- Class[] ExpectExceptions()default Class.class;
+ Class<?>[] ExpectExceptions()default Class.class;
  String ParameterSource() default "";
 }
 
